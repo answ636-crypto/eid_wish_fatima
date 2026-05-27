@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eid Ul Adha – For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green-deep: #0a2e1a;
+  --green-mid: #134d2e;
+  --green-light: #1e6b40;
+  --green-accent: #2d9e5f;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --white: #f5f0e8;
+  --black: #0c0c0c;
+  --lamp-yellow: #ffe066;
+  --lamp-orange: #ffb347;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--green-deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── WIRED LAMP LIGHTS ── */
+.wire-container {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.wire {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+}
+
+svg.wire-svg {
+  width: 100%;
+  height: 80px;
+  overflow: visible;
+}
+
+.lamp {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lamp-body {
+  width: 18px;
+  height: 28px;
+  background: linear-gradient(160deg, var(--lamp-yellow), var(--lamp-orange));
+  border-radius: 4px 4px 8px 8px;
+  position: relative;
+  box-shadow: 0 0 12px 4px rgba(255,200,80,0.55), 0 0 30px 8px rgba(255,160,50,0.25);
+  animation: flicker 3s ease-in-out infinite;
+}
+
+.lamp-cap {
+  width: 22px;
+  height: 6px;
+  background: #8B6914;
+  border-radius: 3px 3px 0 0;
+}
+
+.lamp-glow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(255,200,80,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px 4px rgba(255,200,80,0.6), 0 0 30px 8px rgba(255,160,50,0.3); }
+  25% { opacity: 0.85; box-shadow: 0 0 8px 3px rgba(255,200,80,0.4), 0 0 20px 5px rgba(255,160,50,0.2); }
+  50% { opacity: 1; box-shadow: 0 0 16px 6px rgba(255,200,80,0.7), 0 0 40px 12px rgba(255,160,50,0.35); }
+  75% { opacity: 0.9; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+}
+
+/* ── STARS ── */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* ── CRESCENT MOON ── */
+.moon {
+  position: fixed;
+  top: 90px;
+  right: 40px;
+  width: 60px;
+  height: 60px;
+  z-index: 5;
+  animation: moonFloat 6s ease-in-out infinite;
+}
+
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.moon::before {
+  content: '';
+  position: absolute;
+  width: 60px; height: 60px;
+  background: var(--gold-light);
+  border-radius: 50%;
+  box-shadow: 0 0 20px 6px rgba(201,168,76,0.4);
+}
+
+.moon::after {
+  content: '';
+  position: absolute;
+  width: 48px; height: 48px;
+  background: var(--green-deep);
+  border-radius: 50%;
+  top: -4px;
+  left: 16px;
+}
+
+/* ── MAIN WRAPPER ── */
+.scene {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 40px;
+}
+
+/* ── QUIZ SCREEN ── */
+#quiz-screen {
+  text-align: center;
+  animation: fadeIn 1s ease forwards;
+}
+
+.quiz-bismillah {
+  font-family: 'Amiri', serif;
+  color: var(--gold-light);
+  font-size: 28px;
+  margin-bottom: 16px;
+  opacity: 0.85;
+  letter-spacing: 2px;
+}
+
+.quiz-question {
+  font-family: 'Cinzel', serif;
+  color: var(--white);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 36px;
+  letter-spacing: 1px;
+}
+
+.quiz-options {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quiz-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  padding: 14px 36px;
+  border: 2px solid var(--gold);
+  background: transparent;
+  color: var(--gold-light);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.quiz-btn:hover {
+  background: var(--gold);
+  color: var(--black);
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(201,168,76,0.4);
+}
+
+.error-msg {
+  margin-top: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  color: #ff7070;
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.error-msg.show { opacity: 1; }
+
+/* ── WELCOME SCREEN ── */
+#welcome-screen {
+  display: none;
+  text-align: center;
+}
+
+.welcome-line {
+  font-family: 'Cinzel', serif;
+  color: var(--white);
+  font-size: 28px;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(20px);
+  margin-bottom: 16px;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.welcome-line.name {
+  font-family: 'Amiri', serif;
+  color: var(--gold-light);
+  font-size: 46px;
+  font-weight: 700;
+}
+
+.welcome-line.eid {
+  font-family: 'Amiri', serif;
+  color: var(--green-accent);
+  font-size: 36px;
+}
+
+.welcome-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── CARD SCREEN ── */
+#card-screen {
+  display: none;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.dua-card {
+  background: var(--green-mid);
+  border-radius: 16px;
+  padding: 36px 32px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px) scale(0.96);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  border: 1.5px solid rgba(201,168,76,0.25);
+}
+
+.dua-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* calm breathing border glow */
+.dua-card::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 18px;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  opacity: 0.4;
+  z-index: -1;
+  animation: borderBreathe 5s ease-in-out infinite;
+  box-shadow: 0 0 18px 2px rgba(201,168,76,0.15), inset 0 0 18px 2px rgba(201,168,76,0.05);
+}
+
+@keyframes borderBreathe {
+  0%, 100% { opacity: 0.3; box-shadow: 0 0 12px 1px rgba(201,168,76,0.12); }
+  50%       { opacity: 0.7; box-shadow: 0 0 28px 6px rgba(201,168,76,0.28); }
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.card-eid-title {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  color: var(--gold-light);
+  font-weight: 700;
+}
+
+.card-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  padding: 8px 16px;
+  border: 1.5px solid rgba(255,255,255,0.55);
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+.tab-btn:hover, .tab-btn.active {
+  background: var(--gold);
+  color: var(--green-deep);
+  border-color: var(--gold);
+  box-shadow: 0 2px 12px rgba(201,168,76,0.35);
+  font-weight: 600;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeSlide 0.4s ease forwards;
+}
+
+.tab-content.active { display: block; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dua-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--gold-light);
+  text-align: center;
+  margin-bottom: 16px;
+  direction: rtl;
+  line-height: 2;
+}
+
+.dua-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.85;
+  text-align: center;
+}
+
+.dua-footer {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+  text-align: center;
+}
+
+.tab-icon {
+  display: block;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.from-line {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Amiri', serif;
+  color: var(--gold-light);
+  font-size: 18px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* ── FLOATING PETALS / LANTERNS ── */
+.petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 3;
+  font-size: 18px;
+  animation: petalFall var(--fall-dur, 8s) linear infinite var(--fall-delay, 0s);
+  opacity: 0;
+}
+
+@keyframes petalFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .scene { padding: 90px 14px 30px; }
+  .welcome-line.name { font-size: 30px; }
+  .welcome-line { font-size: 17px; letter-spacing: 0.5px; }
+  .welcome-line.eid { font-size: 26px; }
+  .dua-card { padding: 22px 16px 26px; }
+  .card-eid-title { font-size: 20px; }
+  .card-subtitle { font-size: 11px; letter-spacing: 1px; }
+  .tabs { gap: 6px; }
+  .tab-btn { font-size: 10px; padding: 7px 12px; }
+  .dua-arabic { font-size: 17px; }
+  .dua-text { font-size: 14.5px; line-height: 1.75; }
+  .dua-footer { font-size: 12px; }
+  .quiz-bismillah { font-size: 22px; }
+  .quiz-question { font-size: 18px; }
+  .quiz-btn { padding: 12px 26px; font-size: 14px; }
+  .moon { width: 40px; height: 40px; top: 80px; right: 16px; }
+  .moon::before { width: 40px; height: 40px; }
+  .moon::after { width: 32px; height: 32px; top: -3px; left: 10px; }
+  .from-line { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- MOON -->
+<div class="moon"></div>
+
+<!-- WIRED LAMPS -->
+<div class="wire-container">
+  <svg class="wire-svg" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 Q150,40 300,10 Q450,40 600,10 Q750,40 900,10 Q1050,40 1200,10"
+          fill="none" stroke="#5a4010" stroke-width="1.5"/>
+  </svg>
+  <!-- lamps injected by JS -->
+</div>
+
+<!-- FLOATING PETALS -->
+<div id="petals"></div>
+
+<!-- SCENE -->
+<div class="scene">
+
+  <!-- QUIZ -->
+  <div id="quiz-screen">
+    <p class="quiz-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+    <p class="quiz-question">Is Ans a good guy?</p>
+    <div class="quiz-options">
+      <button class="quiz-btn" onclick="checkAnswer('no')">No</button>
+      <button class="quiz-btn" onclick="checkAnswer('yes')">Absolutely</button>
+    </div>
+    <p class="error-msg" id="error-msg">🎓 Congratulations! You're illiterate — please choose the correct option.</p>
+  </div>
+
+  <!-- WELCOME -->
+  <div id="welcome-screen">
+    <p class="welcome-line name" id="w1">Welcome, Dear Soul</p>
+    <p class="welcome-line" id="w2">Everything you're seeing is made from scratch for you</p>
+    <p class="welcome-line eid" id="w3">Eid-Ul-Adha Mubarak! 🌙</p>
+  </div>
+
+  <!-- CARD -->
+  <div id="card-screen">
+    <div class="dua-card" id="dua-card">
+
+      <div class="card-header">
+        <div class="card-eid-title">عيد الأضحى مبارك</div>
+        <div class="card-subtitle">A gift of duas — for you</div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(0)">Blessing</button>
+        <button class="tab-btn" onclick="openTab(1)">Joy</button>
+        <button class="tab-btn" onclick="openTab(2)">Strength</button>
+        <button class="tab-btn" onclick="openTab(3)">Peace</button>
+        <button class="tab-btn" onclick="openTab(4)">Future</button>
+      </div>
+
+      <!-- TAB 0: BLESSING -->
+      <div class="tab-content active" id="tab-0">
+        <span class="tab-icon">🌿</span>
+        <p class="dua-arabic">اللَّهُمَّ بَارِكْ لَهَا وَارْزُقْهَا خَيْرَ الدُّنْيَا وَالآخِرَة</p>
+        <p class="dua-text">
+          On this blessed Eid, I wish you good luck for the rest of the year.
+          May you never find a single tear in your eyes, and may Allah grant you
+          everything you deserve — and so much more than you ever dared to ask for.
+        </p>
+        <p class="dua-footer">— A prayer from the heart</p>
+      </div>
+
+      <!-- TAB 1: JOY -->
+      <div class="tab-content" id="tab-1">
+        <span class="tab-icon">✨</span>
+        <p class="dua-arabic">اللَّهُمَّ اجْعَلْ يَوْمَهَا خَيْرًا مِنْ أَمْسِهَا</p>
+        <p class="dua-text">
+          May every day ahead be brighter than the one before.
+          May your smile never fade, your laughter never run dry,
+          and may this Eid fill your home with warmth that stays long after the day is gone.
+        </p>
+        <p class="dua-footer">— Wishing you endless joy</p>
+      </div>
+
+      <!-- TAB 2: STRENGTH -->
+      <div class="tab-content" id="tab-2">
+        <span class="tab-icon">🛡️</span>
+        <p class="dua-arabic">اللَّهُمَّ أَعِنْهَا وَثَبِّتْهَا وَقَوِّ قَلْبَهَا</p>
+        <p class="dua-text">
+          When the world feels heavy and the road feels long,
+          may Allah give you a strength you didn't know you had.
+          May every hardship you face only reveal how unbreakable you truly are.
+        </p>
+        <p class="dua-footer">— May you always rise</p>
+      </div>
+
+      <!-- TAB 3: PEACE -->
+      <div class="tab-content" id="tab-3">
+        <span class="tab-icon">🌙</span>
+        <p class="dua-arabic">اللَّهُمَّ اجْعَلْ قَلْبَهَا مُطْمَئِنًّا بِذِكْرِكَ</p>
+        <p class="dua-text">
+          May your heart always find its stillness. May you carry a peace within you
+          that no noise can disturb. May this Eid remind you that you are held —
+          by faith, by love, and by every good dua ever made for you.
+        </p>
+        <p class="dua-footer">— A prayer for your inner calm</p>
+      </div>
+
+      <!-- TAB 4: FUTURE -->
+      <div class="tab-content" id="tab-4">
+        <span class="tab-icon">🌅</span>
+        <p class="dua-arabic">اللَّهُمَّ اكْتُبْ لَهَا النَّجَاحَ وَالسَّعَادَةَ فِي كُلِّ خُطْوَة</p>
+        <p class="dua-text">
+          May your future be written in the ink of success and happiness.
+          Every step you take — may it be guided, every dream you carry —
+          may it be blessed, and every door that matters — may it open for you.
+        </p>
+        <p class="dua-footer">— For all the chapters still to come</p>
+      </div>
+
+      <div class="from-line">— From Ans, with sincerity 🌿</div>
+    </div>
+  </div>
+
+</div><!-- /scene -->
+
+<script>
+/* ── STARS ── */
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    top:${Math.random()*100}vh;
+    left:${Math.random()*100}vw;
+    --dur:${(Math.random()*3+2).toFixed(1)}s;
+    --delay:${(Math.random()*4).toFixed(1)}s;
+  `;
+  starsEl.appendChild(s);
+}
+
+/* ── LAMPS ── */
+const wireContainer = document.querySelector('.wire-container');
+const lampPositions = [8, 18, 28, 38, 48, 58, 68, 78, 88];
+// The wire path: Q150,40 Q450,40 Q750,40 — we compute approximate Y at each X%
+function wireY(pct) {
+  // approximate wave: y = 10 + 30 * |sin(pct * π * 3)|
+  return 10 + 28 * Math.abs(Math.sin(pct * Math.PI * 3));
+}
+
+lampPositions.forEach((pct, idx) => {
+  const lamp = document.createElement('div');
+  lamp.className = 'lamp';
+  const y = wireY(pct / 100);
+  lamp.style.cssText = `left:${pct}%;top:${y}px;position:absolute;align-items:center;display:flex;flex-direction:column;`;
+  lamp.style.animationDelay = `${idx * 0.4}s`;
+
+  lamp.innerHTML = `
+    <div class="lamp-cap"></div>
+    <div class="lamp-body" style="animation-delay:${(idx*0.3).toFixed(1)}s">
+      <div class="lamp-glow" style="animation-delay:${(idx*0.3).toFixed(1)}s"></div>
+    </div>
+  `;
+  wireContainer.appendChild(lamp);
+});
+
+/* ── FLOATING PETALS ── */
+const petalsEl = document.getElementById('petals');
+const petalEmojis = ['🌿', '⭐', '🌙', '✦', '◆'];
+for (let i = 0; i < 14; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[i % petalEmojis.length];
+  p.style.cssText = `
+    left:${Math.random()*100}vw;
+    --fall-dur:${(Math.random()*6+7).toFixed(1)}s;
+    --fall-delay:${(Math.random()*8).toFixed(1)}s;
+    font-size:${Math.random()*10+12}px;
+    opacity:0.6;
+  `;
+  petalsEl.appendChild(p);
+}
+
+/* ── QUIZ ── */
+function checkAnswer(ans) {
+  if (ans === 'no') {
+    document.getElementById('error-msg').classList.add('show');
+  } else {
+    document.getElementById('quiz-screen').style.display = 'none';
+    runWelcome();
+  }
+}
+
+/* ── WELCOME ANIMATION ── */
+function runWelcome() {
+  const ws = document.getElementById('welcome-screen');
+  ws.style.display = 'block';
+
+  const lines = ['w1', 'w2', 'w3'];
+  lines.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).classList.add('visible');
+    }, i * 900 + 300);
+  });
+
+  // after all lines, show card
+  setTimeout(showCard, lines.length * 900 + 1400);
+}
+
+/* ── SHOW CARD ── */
+function showCard() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  const cs = document.getElementById('card-screen');
+  cs.style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('dua-card').classList.add('visible');
+  }, 50);
+}
+
+/* ── TABS ── */
+function openTab(idx) {
+  document.querySelectorAll('.tab-content').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+}
+</script>
+</body>
+</html>
